@@ -1,0 +1,12 @@
+proxmox:
+  storage:
+    template: "local-lvm"
+    iso: "local"
+  
+  network:
+    bridge: "vmbr0"
+
+vm_defaults:
+  cores: 2
+  memory: 2048
+  disk_size: "20G"

@@ -1,0 +1,16 @@
+debian13:
+  iso:
+    file: "debian-13.1.0-amd64-netinst.iso"
+  
+  variants:
+    base:
+      name: "debian13-base"
+      description: "Debian 13 minimal base"
+    
+    hardened:
+      name: "debian13-hardened"
+      description: "Debian 13 with hardening"
+    
+    salt-minion:
+      name: "debian13-salt-hardened"
+      description: "Debian 13 hardened + Salt Minion pre-installed"
