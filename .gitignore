@@ -1,0 +1,25 @@
+# Unencrypted secrets NIEMALS committen
+secrets/*.yaml
+!secrets/*.enc.yaml
+!secrets/.gitkeep
+
+# Packer artifacts
+packer_cache/
+output-*/
+*.box
+*.log
+crash.log
+
+# Age private keys
+*.txt
+keys.txt
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
