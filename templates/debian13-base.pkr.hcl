@@ -78,8 +78,8 @@ source "proxmox-iso" "debian13-base" {
   # Proxmox connection
   proxmox_url = var.proxmox_url
   node        = var.proxmox_node
-  username    = var.proxmox_username
-  token       = "${var.proxmox_token_id}=${var.proxmox_token_secret}"
+  username    = "${var.proxmox_username}!${var.proxmox_token_id}"
+  token       = var.proxmox_token_secret
   
   insecure_skip_tls_verify = true
   
@@ -113,10 +113,27 @@ source "proxmox-iso" "debian13-base" {
   # Boot command - Preseed
   boot_command = [
     "<esc><wait>",
-    "auto url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/debian/preseed.cfg<enter>"
+    "install <wait>",
+    "preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/debian/preseed.cfg <wait>",
+    "debian-installer=en_US.UTF-8 <wait>",
+    "auto <wait>",
+    "locale=en_US.UTF-8 <wait>",
+    "kbd-chooser/method=de <wait>",
+    "keyboard-configuration/xkb-keymap=de <wait>",
+    "netcfg/get_hostname=debian-template <wait>",
+    "netcfg/get_domain=localdomain <wait>",
+    "fb=false <wait>",
+    "debconf/frontend=noninteractive <wait>",
+    "console-setup/ask_detect=false <wait>",
+    "<enter><wait>"
   ]
-  boot_wait = "10s"
+  boot_wait = "5s"
+
+  # HTTP Server - FIX für Download abort
   http_directory = "http"
+  http_bind_address = "0.0.0.0"
+  http_port_min = 8100
+  http_port_max = 8100
   
   # SSH for provisioning
   ssh_username = var.ssh_username
